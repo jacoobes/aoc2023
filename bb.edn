@@ -1,0 +1,8 @@
+{
+ :min-bb-version "0.4.0"
+ :tasks {
+    exec { :doc "run aoc solution n"
+                  :task (shell {:dir "./aoc2023/"} (str "bb " (first *command-line-args*) ".clj" ))}
+     
+  }
+}
