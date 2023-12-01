@@ -5,5 +5,6 @@
 
 
 ```sh
-bb run exec *filename*
+# without the extension
+bb run exec *filename* 
 ```
