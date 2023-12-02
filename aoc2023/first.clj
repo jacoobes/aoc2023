@@ -32,13 +32,12 @@ Consider your entire calibration document. What is the sum of all of the calibra
       (str/split-lines)))
 
 (defn solution-part-1 [in] 
-    (->> in
-         (map #(str/replace % #"[A-Za-z\s]+" ""))
-         (map #(str (first %) (last %)))
-         (map #(Integer/parseInt %))
-         (apply +)))
+    (->> in (map #(str/replace % #"[A-Za-z\s]+" ""))
+            (map #(str (first %) (last %)))
+            (map #(Integer/parseInt %))
+            (apply +)))
 
-(println (solution-part-1 (input "./input.txt")))
+(println (solution-part-1 (input "./input1.txt")))
 
 ;one, two, three, four, five, six, seven, eight, and nine
 (def wordnums { 
@@ -79,6 +78,6 @@ Consider your entire calibration document. What is the sum of all of the calibra
       (apply +)))
 
 ; 53894
-(println (solution-part-2 (input "./input.txt")))
+(println (solution-part-2 (input "./input1.txt")))
 
 
