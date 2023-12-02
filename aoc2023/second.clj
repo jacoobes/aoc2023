@@ -4,9 +4,6 @@
   (-> (slurp path)
       (str/split-lines)))
 
-(defn idexof-semi[s] 
-    (str/index-of s ";"))
-
 (defn parse-pairs [sq] 
     (->> sq (map #(str/split % #" "))
             (map (fn [[k v]] [v (Integer/parseInt k)]))))
@@ -37,9 +34,8 @@
       0)))
 
 (defn solution-1 [arr] 
-    (->> arr 
-         (map-indexed determine-possible)
-         (apply +)))
+    (->> arr (map-indexed determine-possible)
+             (apply +)))
 
 (defn solution-2 [arr]
     (->> arr 
