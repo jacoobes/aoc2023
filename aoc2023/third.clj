@@ -1,4 +1,5 @@
-
+(:require '[clojure.string :as str])
+(:require '[clojure.pprint :as pretty])
 
 (defn input [url]  
   (-> (slurp url)
@@ -7,6 +8,11 @@
 (defn period? [c] 
   (= c \.))
 
+
+(defn digit? [c] 
+  (<=  48 (int c) 57))
+
+
 #_"
   known=
     lines are even length
@@ -14,8 +20,25 @@
     anything else is symbol
 "
 
-(defn solution1 [url] 
-  (let [grid (map seq (input url))]
-    grid))
 
-(println (solution1 "./input3.txt"))
+#_(defn transform-char [i c] 
+  (cond  (period? c) -1
+         (digit? c) 
+         :else i))
+
+(defn parse-seq 
+  [strseq] )
+
+(defn get-position [tpk] 
+    (->> tpk 
+         (filter #(and (number? %) (not= -1 %))) 
+         (map int)))
+
+(defn lines->grid [lines] 
+  (map #(apply vector %) lines))
+
+(defn solution1 [lines] 
+     (lines->grid lines)   
+  )
+
+(println (solution1 (input "./input3.txt")))
