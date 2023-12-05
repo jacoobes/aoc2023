@@ -55,7 +55,7 @@
 (def res (solution2 (input test)))
 
 (def vecres 
-  (into [] (map-indexed #(range (+ % 1) (+ %2 % 1)) res)))
+  (into [] (map-indexed #(range (+ % 2) (+ %2 % 2)) res)))
 
 
 (defn solve-card [i] 
