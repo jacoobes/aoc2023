@@ -1,10 +1,14 @@
 (require '[clojure.string :as str])
 (require '[clojure.set :as set])
 
+
+(defn normalize-str [url] 
+  (try (slurp url) 
+       (catch Exception e 
+       (do (println "Warning: non url passed") url))))
+
 (defn input [url]  
-  (-> (try (slurp url) 
-           (catch Exception e 
-             (do (println "Warning: non url passed") url)))
+  (-> (normalize-str url)
       (str/replace #"Card +\d+:" "")
       (str/split-lines)))
 
@@ -29,26 +33,45 @@
            Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
            Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
            Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11")
+(defn create-winners [v] 
+  (->> v
+      (map #(split-bar %))
+      (mapv create-set-pairs)
+      (map #(apply set/intersection %))))
 
 (defn solution1 [input]
-  (->> input
-       (map #(split-bar %))
-       (mapv create-set-pairs)
-       (map #(apply set/intersection %))
+  (->> (create-winners input)
        (map #(if (empty? %) 
                       0
                       (/ (Math/pow 2 (count %)) 2)))
        sumnum))
 
 (defn solution2 [t]
-  (->> t 
-       (map #(split-bar %))
-       (mapv create-set-pairs)
-
-  ))
-
+   (->> (create-winners t) 
+       (map count)))
 
 (println (solution1 (input "./input4.txt")))
 
-(println (solution2 (input test)))
+(def res (solution2 (input test)))
+
+(def vecres 
+  (into [] (map-indexed #(range (+ % 1) (+ %2 % 1)) res)))
+
+
+(defn solve-card [i] 
+  (fn [acc v] 
+   (update acc v + (acc i 1))))
+
+(def occurences 
+  (loop [[[i h] & rst] (map-indexed vector res)
+          sum []]
+    (if h
+      (let [start (zipmap (range 1 (count res)) (repeat 1))
+            _ (println vecres)]
+       (recur rst (conj sum (reduce (solve-card i) start (get vecres i)) )))
+      sum))) 
+
+(println res)
+
+
 
