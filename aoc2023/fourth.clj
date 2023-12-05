@@ -74,4 +74,4 @@
 (println res)
 
 
-
+(println (apply + (flatten (map vals occurences))))
