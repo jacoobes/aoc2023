@@ -1,4 +1,3 @@
-(require '[clojure.string :as str])
 
 (defn input [path]  
   (-> (slurp path)
