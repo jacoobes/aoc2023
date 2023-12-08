@@ -13,25 +13,23 @@
 (defn four-kind? [map]
   (some #{ 4 1 } (vals map)))
 
-(defn sort-hands [[hand-a _] [hand-b _]] 
-  (let [[counta countb] [(count hand-a) (count hand-b)]
-        type (abs (- counta countb))]
-        (cond 
-          (or (= counta 2) (= countb 2)) (if (four-kind? hand-a)
-                                             1
-                                             -1)
-          (zero? type) (compare (-> hand-a first first) 
-                                ( -> hand-b first first))
-
-          :else (compare countb counta)
-          )
-    ))
+(defn determine-kind [[hand _]] 
+  (let [handcount (count hand)]
+    (cond 
+      (= handcount 5) (assoc hand :type :high-card)
+      (= handcount 4) (assoc hand :type :one-pair)
+      (= handcount 3) (if (some #{2} hand)
+                        (assoc hand :type :two-pair)
+                        (assoc hand :type :three-kind)) 
+      (= handcount 4) (if (some #{3} hand)
+                        (assoc hand :type :full-house)
+                        (assoc hand :type :four-kind))
+      (= handcount 1) (assoc hand :type :five-kind))))
 
 
 (defn -main [ ]
   (with-open [rdr (io/reader "./aoc2023/input7.txt")]
       (->> (line-seq rdr)
-           (map into-pair)
-          ))
+           (map into-pair)))
 
 
