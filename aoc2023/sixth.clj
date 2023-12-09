@@ -1,6 +1,5 @@
-(ns sixth
-  (:require [clojure.string :as str]
-            [utils :as u]))
+(:require '[clojure.string :as str])
+(require '[utils :as u])
 
 (def test-input 
   "Time:      7  15   30
@@ -38,14 +37,11 @@
 
 (defn solution [input transform] 
   (let [matrix (transpose (get-data input transform))
-        _ (println matrix) ]
+        #_ (println matrix) ]
       (apply * (map count (reduce calc-distances [] matrix)))))
 
-(defn -main [ ]
-  (let [s1 (solution "./aoc2023/input6.txt" transform1)
-        s1 (solution test-input transform1)
-        #__s2 #_(solution2 "./aoc2023/input6.txt")] 
-   (do (println s1)
-       #_(println s2))))
-
+(let [s1 (solution (io/resource "./resources/input6.txt") transform1)
+      s1 (solution test-input transform1)
+      #__s2 #_(solution2 "./aoc2023/input6.txt")] 
+ (do (println s1)))
 

@@ -1,3 +1,5 @@
+(:require '[clojure.string :as str])
+(:require '[clojure.java.io :as io])
 
 (defn input [path]  
   (-> (slurp path)
@@ -43,8 +45,8 @@
          (apply +)))
 
 
-(println (solution-1 (parse (input "./input2.txt"))))
+(println (solution-1 (parse (input (io/resource "resources/input2.txt")))))
 
-(println (solution-2 (parse (input "./input2.txt"))))
+(println (solution-2 (parse (input (io/resource "resources/input2.txt")))))
 
 

@@ -1,5 +1,6 @@
-(ns fifth 
-  (:require [clojure.string :as str]))
+(:require '[clojure.string :as str])
+(:require '[clojure.java.io :as io])
+(require '[utils :as u])
 
 
 (def test 
@@ -46,7 +47,7 @@ humidity-to-location map:
   (-> (normalize-str url)
       (str/split-lines)))
 
-(def mapstrings ( ->> (input "./aoc2023/input5.txt")
+(def mapstrings ( ->> (input (io/resource "./resources/input5.txt"))
                       (map #(str/split % #":"))))
 
 
@@ -86,6 +87,4 @@ humidity-to-location map:
 (def answer (apply min reduced) )
 
 
-
-(defn -main [& args] 
-  (prn answer)) 
+(println answer)

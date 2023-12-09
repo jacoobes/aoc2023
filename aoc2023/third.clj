@@ -1,5 +1,5 @@
 (:require '[clojure.string :as str])
-(:require '[clojure.pprint :as pretty])
+(:require '[clojure.java.io :as io])
 
 (defn input [url]  
   (-> (slurp url)
@@ -60,7 +60,7 @@
 
 (defn solution1 [lines] 
   (let [grid (apply vector (lines->grid lines))
-        igrid (indexed grid)
+        igrid (map-indexed grid)
         grid-positions (get-symbol-pos grid)]
     (loop [[fst & rest]  grid-positions 
             numbers []]
@@ -71,4 +71,4 @@
             ) 
           igrid))))
 
-(println (solution1 (input "./input3.txt")))
+(println (solution1 (input (io/resource "./resources/input3.txt"))))

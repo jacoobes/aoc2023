@@ -1,6 +1,4 @@
-(ns aoc2023.first
-  (:require [clojure.string :as str]))
-
+(:require '[clojure.java.io :as io])
 #_ "--- Day 1: Trebuchet?! ---
 
 Something is wrong with global snow production, and you've been selected to take a look. The Elves have even given you a map; on it, they've used stars to mark the top fifty locations that are likely to be having problems.
@@ -37,7 +35,7 @@ Consider your entire calibration document. What is the sum of all of the calibra
             (map #(Integer/parseInt %))
             (apply +)))
 
-(println (solution-part-1 (input "./input1.txt")))
+(println (solution-part-1 (input (io/resource "./resources/input1.txt"))))
 
 ;one, two, three, four, five, six, seven, eight, and nine
 (def wordnums { 
@@ -78,6 +76,6 @@ Consider your entire calibration document. What is the sum of all of the calibra
       (apply +)))
 
 ; 53894
-(println (solution-part-2 (input "./input1.txt")))
+(println (solution-part-2 (input (io/resource "./resources/input1.txt"))))
 
 

@@ -1,7 +1,6 @@
-(ns seventh
-  (:require [utils :as u]
-            [clojure.java.io :as io]
-            [clojure.string :as str]))
+(require '[utils :as u])
+(:require '[clojure.java.io :as io])
+(:require '[clojure.string :as str])
 
 (def test 
 "32T3K 765
@@ -44,10 +43,9 @@ QQQJA 483")
   
   )
 
-(defn -main [ ]
-    (println (->> (u/input "./aoc2023/input7.txt")
-                  (map into-pair)
-                  (map determine-kind)
-                  (sort-by juxtfn))))
+(println (->> (u/input (io/resource "./resources/input7.txt"))
+              (map into-pair)
+              (map determine-kind)
+              (sort-by juxtfn)))
 
 

@@ -3,7 +3,6 @@
  :paths ["aoc2023"]
  :tasks {
     exec { :doc "run aoc solution n"
-                  :task (shell {:dir "./aoc2023/"} (str "bb " (first *command-line-args*) ".clj" ))}
-     
+           :task (shell (str "bb " "-cp " "aoc2023 " "-f " (first *command-line-args*) ".clj"))}
   }
 }
