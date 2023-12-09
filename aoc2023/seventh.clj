@@ -1,35 +1,50 @@
 (ns seventh
   (:require [utils :as u]
             [clojure.java.io :as io]
-            [clojure.core.match :refer [match]]))
+            [clojure.string :as str]))
 
-(def test "32T3K 765")
+(def test 
+"32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483")
+
+(def translate-chars { \A \Z \K \Y \Q \X \J \W \T \V })
+
+(defn translate-ordering [s]
+  (reduce #(str % (translate-chars %2 %2)) "" s))
 
 (defn into-pair [s] 
   (let [[hand wager] (str/split s #" ")]  
-    [(frequencies hand) (Integer/parseInt wager)]))
+    (assoc { :hand hand 
+             :wager (Integer/parseInt wager) 
+             :hand-ordered (translate-ordering hand) } 
+           :frequencies (frequencies hand) )))
 
-
-(defn four-kind? [map]
-  (some #{ 4 1 } (vals map)))
-
-(defn determine-kind [[hand _]] 
-  (let [handcount (count hand)]
+(defn determine-kind [hand] 
+  (let [handcount (count (:frequencies hand))]
     (cond 
-      (= handcount 5) (assoc hand :type :high-card)
-      (= handcount 4) (assoc hand :type :one-pair)
+      (= handcount 5) (assoc hand :value 1)
+      (= handcount 4) (assoc hand :value 2)
       (= handcount 3) (if (some #{2} hand)
-                        (assoc hand :type :two-pair)
-                        (assoc hand :type :three-kind)) 
-      (= handcount 4) (if (some #{3} hand)
-                        (assoc hand :type :full-house)
-                        (assoc hand :type :four-kind))
-      (= handcount 1) (assoc hand :type :five-kind))))
+                        (assoc hand :value 3)
+                        (assoc hand :value 4))
+      (= handcount 2) (if (some #{3} hand)
+                        (assoc hand :value 5)
+                        (assoc hand :value 6))
+      (= handcount 1) (assoc hand :value 7))))
 
+(defn price [rank wager]
+  (* rank wager))
+
+(def juxtfn (juxt :value  
+                  :hand-ordered ))
 
 (defn -main [ ]
-  (with-open [rdr (io/reader "./aoc2023/input7.txt")]
-      (->> (line-seq rdr)
-           (map into-pair)))
+    (println (->> (u/input test)
+                  (map into-pair)
+                  (map determine-kind)
+                  (sort-by juxtfn))))
 
 
