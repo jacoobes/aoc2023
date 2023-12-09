@@ -40,9 +40,12 @@ QQQJA 483")
 
 (def juxtfn (juxt :value  
                   :hand-ordered ))
+(defn det-ranks [] 
+  
+  )
 
 (defn -main [ ]
-    (println (->> (u/input test)
+    (println (->> (u/input "./aoc2023/input7.txt")
                   (map into-pair)
                   (map determine-kind)
                   (sort-by juxtfn))))
