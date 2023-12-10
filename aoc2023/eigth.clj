@@ -1,4 +1,4 @@
-(:require '[clojure.string :as str])
+(require '[clojure.string :as str])
 (require '[utils :as u])
 
 (defn traverse [node-map root instructs]
