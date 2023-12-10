@@ -1,6 +1,10 @@
 (ns utils 
   (:require [clojure.string :as str]))
 
+(defn flip [f]
+  (fn [& xs]
+    (apply f (reverse xs))))
+
 (defn normalize-str [url] 
   (try (slurp url) 
        (catch Exception e 
