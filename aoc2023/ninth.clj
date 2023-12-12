@@ -19,6 +19,7 @@
                  (map rseq)))
 
 (let [s1 (map #(reduce + (map last %)) input9)
+      _ (println (apply + (map (comp last identity) input9)))
       s2 (map #(reduce (u/flip -) (map first %)) input9)] 
   (println (apply + s1) (apply + s2)))
 
