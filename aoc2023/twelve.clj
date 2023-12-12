@@ -12,10 +12,10 @@
 
 (def into-vec (comp read-string #(str "[" % "]" ) second))
 
-(def non-period (comp #(re-seq #"[\?|\#]+" %) first))
+(def non-period (comp #_#(re-seq #"[\?|\#]+" %) first))
 
 (->> (u/input test)
      (map #(str/split % #" "))
      (map (juxt non-period into-vec))
-     (map (fn [[f l]] { :pattern f :broken l })))
-  
+     (map (fn [[f l]] { :pattern f :broken l }))
+     )
