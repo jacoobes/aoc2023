@@ -1,6 +1,7 @@
 {
  :min-bb-version "0.4.0"
  :paths ["aoc2023"]
+ :deps {org.clojure/math.combinatorics {:mvn/version "0.2.0"}}
  :tasks {
     exec { :doc "run aoc solution n"
            :task (shell (str "bb " "-cp " "aoc2023 " "-f " (first *command-line-args*) ".clj"))}
