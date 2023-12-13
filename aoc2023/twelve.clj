@@ -11,19 +11,29 @@
 ????.######..#####. 1,6,5
 ?###???????? 3,2,1")
 
-(def into-vec (comp read-string #(str "[" % "]" ) second))
-
-(def non-period (comp #(str/split % #"") first))
+(def into-vec 
+  (comp read-string #(str "[" % "]" ) second))
+;#"\?|\#+|\."
+(def non-period 
+  (comp #(str/split % #"") first))
 
 (defn factorial
-  ([n]                    ; when only one argument is passed in
-    (factorial n 1))
+  ([n] (factorial n 1)); when only one argument is passed in
   ([n acc]                ; when two arguments are passed in
     (if  (= n 0)  acc
     (recur (dec n) (* acc n)))))
 
-(->> (u/input test)
+
+(def v (->> (u/input test)
      (map #(str/split % #" "))
      (map (juxt non-period into-vec))
-     (map (fn [[f l]] { :pattern f :broken l :max-arrangement (factorial (count f))   })))
+     (map (fn [[f l]] { :placements f 
+                        :broken l 
+       ;                 :fac-length (factorial (count f)) 
+                        :sum-broken (count (filter #(= \# %) f) )
+                        :broken-freqs (frequencies l) }))))
 
+(let [mp (first v)
+      { placements :placements } mp] 
+     
+  )
